@@ -5,8 +5,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Now using proxy path for Netlify to forward to backend
-    fetch("/api/players")
+    fetch("https://ibroxintel-backend-production.up.railway.app/api/players")
       .then((res) => res.json())
       .then((data) => {
         setPlayers(data);
@@ -19,17 +18,17 @@ export default function Home() {
   }, []);
 
   return (
-    <main style={{ maxWidth: '600px', margin: '2rem auto', padding: '1rem' }}>
-      <h1 style={{ fontSize: '2rem', color: '#003087', textAlign: 'center' }}>
+    <main style={{ maxWidth: "600px", margin: "2rem auto", padding: "1rem" }}>
+      <h1 style={{ fontSize: "2rem", color: "#003087", textAlign: "center" }}>
         IbroxIntel
       </h1>
-      <p style={{ textAlign: 'center', marginBottom: '1rem' }}>
+      <p style={{ textAlign: "center", marginBottom: "1rem" }}>
         Live Rangers FC Transfer Rumour Tracker
       </p>
       {loading ? (
-        <p style={{ textAlign: 'center' }}>Loading...</p>
+        <p style={{ textAlign: "center" }}>Loading...</p>
       ) : players.length === 0 ? (
-        <p style={{ textAlign: 'center' }}>No rumours found.</p>
+        <p style={{ textAlign: "center" }}>No rumours found.</p>
       ) : (
         <div>
           {players.map((player) => (
@@ -48,4 +47,13 @@ export default function Home() {
               </p>
               {player.value && (
                 <p style={{ margin: "0.25rem 0" }}>
-                  <strong>Value:</strong> {
+                  <strong>Value:</strong> {player.value}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
+  );
+}
