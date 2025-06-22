@@ -19,4 +19,4 @@ function Home() {
 
   return (
     <div style={{ fontFamily: "sans-serif", padding: "2rem", textAlign: "center" }}>
-      <h1 style={{ color: "#003399", fontSize: "2.5rem" }}>IbroxIntel</h1
+      <h1 style={{ color: "#003399", fontSize: "2.5rem" }}>IbroxIntel</h1>
