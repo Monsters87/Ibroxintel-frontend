@@ -5,7 +5,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://ibroxintel-backend-production.up.railway.app/api/players")
+    // Now using proxy path for Netlify to forward to backend
+    fetch("/api/players")
       .then((res) => res.json())
       .then((data) => {
         setPlayers(data);
@@ -32,14 +33,19 @@ export default function Home() {
       ) : (
         <div>
           {players.map((player) => (
-            <div key={player.id} style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
-              <h2 style={{ margin: 0, color: '#003087' }}>{player.name}</h2>
-              <p style={{ margin: '0.25rem 0' }}><strong>Position:</strong> {player.position}</p>
-              {player.value && <p style={{ margin: '0.25rem 0' }}><strong>Value:</strong> {player.value}</p>}
-            </div>
-          ))}
-        </div>
-      )}
-    </main>
-  );
-}
+            <div
+              key={player.id}
+              style={{
+                border: "1px solid #ccc",
+                padding: "1rem",
+                borderRadius: "0.5rem",
+                marginBottom: "1rem",
+              }}
+            >
+              <h2 style={{ margin: 0, color: "#003087" }}>{player.name}</h2>
+              <p style={{ margin: "0.25rem 0" }}>
+                <strong>Position:</strong> {player.position}
+              </p>
+              {player.value && (
+                <p style={{ margin: "0.25rem 0" }}>
+                  <strong>Value:</strong> {
