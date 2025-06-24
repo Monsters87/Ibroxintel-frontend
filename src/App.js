@@ -2,6 +2,7 @@ import React from "react";
 import Rumours from "./components/Rumours";
 import SquadOverview from "./components/SquadOverview";
 import SummaryStats from "./components/SummaryStats";
+import './App.css';
 
 function App() {
   return (
