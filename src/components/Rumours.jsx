@@ -7,7 +7,7 @@ const Rumours = () => {
   useEffect(() => {
     const fetchRumours = async () => {
       try {
-        const response = await fetch('https://your-backend-url/api/rumours');
+        const response = await fetch('https://ibroxintel-api.up.railway.app/api/rumours');
         const data = await response.json();
         setRumours(data);
       } catch (error) {
@@ -18,26 +18,30 @@ const Rumours = () => {
     fetchRumours();
   }, []);
 
-  const credibilityColor = (level) => {
-    switch (level) {
-      case 'High': return 'high';
-      case 'Medium': return 'medium';
-      case 'Low': return 'low';
-      default: return 'unknown';
+  const credibilityClass = (level) => {
+    switch (level?.toLowerCase()) {
+      case 'high': return 'cred-high';
+      case 'medium': return 'cred-medium';
+      case 'low': return 'cred-low';
+      default: return 'cred-unknown';
     }
   };
 
   return (
     <div className="rumours-container">
       {rumours.length === 0 ? (
-        <p>No rumours available.</p>
+        <p className="empty-state">No rumours available.</p>
       ) : (
         rumours.map((rumour) => (
-          <div key={rumour.id} className={`rumour-card ${credibilityColor(rumour.credibility)}`}>
-            <div className="rumour-info">
+          <div key={rumour.id} className={`rumour-card ${credibilityClass(rumour.credibility)}`}>
+            <div className="rumour-header">
               <h3>{rumour.player}</h3>
-              <p className="source">{rumour.source}</p>
-              <span className="credibility">{rumour.credibility} Credibility</span>
+              <span className="credibility-label">{rumour.credibility} Credibility</span>
+            </div>
+            <div className="rumour-meta">
+              <p className="source-name">{rumour.source}</p>
+              {rumour.quote && <blockquote>{rumour.quote}</blockquote>}
+              {rumour.stage && <p className="rumour-stage">Status: {rumour.stage}</p>}
             </div>
           </div>
         ))
