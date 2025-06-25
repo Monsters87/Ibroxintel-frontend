@@ -1,63 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import './Rumours.css';
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-const Rumours = () => {
-  const [rumours, setRumours] = useState([]);
-  const [loading, setLoading] = useState(true);
+app.use(cors()); // Allow frontend to access backend
+app.use(express.json());
 
-  useEffect(() => {
-    const fetchRumours = async () => {
-      try {
-        const response = await fetch('https://ibroxintel-backend-production.up.railway.app/api/rumours');
-        const data = await response.json();
-        setRumours(data);
-      } catch (error) {
-        console.error('Error fetching rumours:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+const rumours = [
+  { id: 7, player: "Todd Cantwell", source: "BBC Sport", credibility: "High" },
+  { id: 8, player: "James Tavernier", source: "Sky Sports", credibility: "Medium" },
+  { id: 9, player: "Jack Butland", source: "Daily Record", credibility: "Low" }
+];
 
-    fetchRumours();
-  }, []);
+app.get('/api/rumours', (req, res) => {
+  res.json(rumours);
+});
 
-  const credibilityColor = (level) => {
-    switch (level) {
-      case 'High': return 'high';
-      case 'Medium': return 'medium';
-      case 'Low': return 'low';
-      default: return 'unknown';
-    }
-  };
+app.get('/', (req, res) => {
+  res.send('IbroxIntel API is running');
+});
 
-  return (
-    <div className="rumours-container">
-      <h2>Transfer Rumours</h2>
-      {loading ? (
-        <p>Loading rumours...</p>
-      ) : rumours.length === 0 ? (
-        <p>No rumours available.</p>
-      ) : (
-        rumours.map((rumour) => (
-          <div key={rumour.id} className={`rumour-card ${credibilityColor(rumour.credibility)}`}>
-            <div className="rumour-info">
-              <h3>{rumour.player}</h3>
-              <p className="source">
-                <a
-                  href={`https://www.google.com/search?q=${encodeURIComponent(rumour.source)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {rumour.source}
-                </a>
-              </p>
-              <span className="credibility">{rumour.credibility} Credibility</span>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
-  );
-};
-
-export default Rumours;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
