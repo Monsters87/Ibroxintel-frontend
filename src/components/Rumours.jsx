@@ -3,6 +3,7 @@ import './Rumours.css';
 
 const Rumours = () => {
   const [rumours, setRumours] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRumours = async () => {
@@ -12,6 +13,8 @@ const Rumours = () => {
         setRumours(data);
       } catch (error) {
         console.error('Error fetching rumours:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -29,7 +32,9 @@ const Rumours = () => {
 
   return (
     <div className="rumours-container">
-      {rumours.length === 0 ? (
+      {loading ? (
+        <p>Loading rumours...</p>
+      ) : rumours.length === 0 ? (
         <p>No rumours available.</p>
       ) : (
         rumours.map((rumour) => (
