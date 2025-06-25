@@ -32,6 +32,7 @@ const Rumours = () => {
 
   return (
     <div className="rumours-container">
+      <h2>Transfer Rumours</h2>
       {loading ? (
         <p>Loading rumours...</p>
       ) : rumours.length === 0 ? (
@@ -41,7 +42,15 @@ const Rumours = () => {
           <div key={rumour.id} className={`rumour-card ${credibilityColor(rumour.credibility)}`}>
             <div className="rumour-info">
               <h3>{rumour.player}</h3>
-              <p className="source">{rumour.source}</p>
+              <p className="source">
+                <a
+                  href={`https://www.google.com/search?q=${encodeURIComponent(rumour.source)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {rumour.source}
+                </a>
+              </p>
               <span className="credibility">{rumour.credibility} Credibility</span>
             </div>
           </div>
